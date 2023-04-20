@@ -7,7 +7,7 @@ const Customer = function(customer) {
 }
 
 Customer.create = (newCustomer, result) => {
-  sql.query('insert into custtomers set ?', newCustomer, (err, res) => {
+  sql.query('insert into customers set ?', newCustomer, (err, res) => {
     if (err) {
       console.log('error: ', err)
       result(err, null)
