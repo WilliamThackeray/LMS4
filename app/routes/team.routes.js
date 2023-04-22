@@ -14,7 +14,7 @@ module.export = app => {
 
   // update team using id
   app.put('/teams/:teamId',
-    teams.validte('updateTeam'),
+    teams.validate('updateTeam'),
     teams.update)
 
   // delete team
