@@ -40,8 +40,11 @@ export default class RestStorageService extends StorageService {
     async read(id) {
         try{
             //TODO:
-            
-            
+            let tempData = await this.list(this.model.options)
+            for (let item of tempData) {
+                if (item.id == id) return item
+            }
+            return null
         }
         catch(err){
             console.log(err);

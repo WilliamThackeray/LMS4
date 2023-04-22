@@ -15,7 +15,7 @@ Customer.create = (newCustomer, result) => {
     }
 
     console.log('created customer: ', { id: res.insertId, ...newCustomer })
-    result(nnull, { id: res.insertId, ...newCustomer})
+    result(null, { id: res.insertId, ...newCustomer})
   })
 }
 
