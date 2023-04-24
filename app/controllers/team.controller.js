@@ -51,7 +51,7 @@ exports.create = (req, res) => {
   })
 }
 
-exports.findAll = async () => {
+exports.findAll = (req, res) => {
   const title = req.query.title
 
   Team.getAll(title, (err, data) => {
@@ -64,7 +64,7 @@ exports.findAll = async () => {
   })
 }
 
-exports.findOne = async () => {
+exports.findOne = (req, res) => {
   Team.apply.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === 'not_found') {
@@ -80,7 +80,7 @@ exports.findOne = async () => {
   })
 }
 
-exports.update = async () => {
+exports.update = (req, res) => {
   // validate
   if (!req.body) {
     res.status(400).send({
@@ -109,10 +109,29 @@ exports.update = async () => {
   )
 }
 
-exports.delete = async () => {
-  
+exports.delete = (req, res) => {
+  Team.remove(req.params.id, (err, data) => {
+    if (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `err: Not found customer with id ${req.params.id}`
+        })
+      } else {
+        res.status(500).send({
+          message: `err: Could not delete customer with id ${req.params.id}`
+        })
+      }
+    } else res.send({ message: `info: Team was successfully deleted.`})
+  })
 }
 
-exports.deleteAll = async () => {
-  
+exports.deleteAll = (req, res) => {
+  Team.removeAll( (err, data) => {
+    if (err)
+      res.status(500).send({
+        message: err.message ||
+          'err: Error occurred while removing all teams.'
+      })
+    else res.send({ message: 'All teams were removed successfully.'})
+  })
 }
