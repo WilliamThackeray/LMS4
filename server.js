@@ -1,11 +1,11 @@
-const express = require('express')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const expressValidator = require('express-validator')
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 
 const app = express()
 
-app.request(cors())
+app.use(cors())
 
 app.use(bodyParser.json())
 
@@ -15,8 +15,9 @@ app.get('/', (req, res) => {
   res.json({ message: `Welcome to wthackeray's application.` })
 })
 
-require('./app/routes/customer.routes.js')(app);
+require('./app/routes/team.routes.js')(app);
 
-app.listen(8081, () => {
-  console.log(`Server is running on port 8081.`)
+const PORT = process.env.PORT || 8080
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`)
 })

@@ -1,13 +1,13 @@
-// For utility functions used often
+// // For utility functions used often
 
-export default class utils {
+// exports.utils = () => {
 
-  getQueryString(options) {
+//   utils.getQueryString(options) {
 
-  }
+//   }
 
-  getItemIndex(data, id) {
-    const index = data.findIndex( item => parseInt(item.id) === parseInt(id))
-    return index
-  }
-}
+//   utils.getItemIndex(data, id) {
+//     const index = data.findIndex( item => parseInt(item.id) === parseInt(id))
+//     return index
+//   }
+// }

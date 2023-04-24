@@ -1,11 +1,13 @@
 const Team = require('../models/team.model.js')
 const util = require('./controller.util.js')
 
+const { body, validationResult } = require('express-validator')
+
 exports.validate = (method) => {
   let rules = [
-    body('name', 'name cannot be empty'.not().isEmpty().trim().escape()),
-    body('coach_id', 'coach id cannot be empty'.not().isEmpty().trim().escape()),
-    body('name', 'name cannot be empty'.not().isEmpty().trim().escape()),
+    body('name', 'name cannot be empty').not().isEmpty().trim().escape(),
+    body('coach_id', 'coach id cannot be empty').not().isEmpty().trim().escape(),
+    body('league_id', 'leauge_id cannot be empty').not().isEmpty().trim().escape(),
     body('notes').trim().escape(),
     body('motto').trim().escape()
   ]
@@ -13,7 +15,7 @@ exports.validate = (method) => {
     case 'updateTeam':
       return rules
     case 'createTeam':
-      let creatRules = [...rules]
+      let createRules = [...rules]
       createRules.push(
         body('name').custom(async (value) => {
           return await Team.checkDuplicateName(value)
@@ -25,6 +27,14 @@ exports.validate = (method) => {
 
 exports.create = (req, res) => {
   // validate
+  // const errs = validationResult(req)
+  
+  // if (!errs.isEmpty()) {
+  //   res.status(422).send({
+  //     message: errs.array()
+  //   })
+  // }
+
   if (!req.body) {
     res.status(400).send({
       message: 'err: Content cannot be empty.'
@@ -42,12 +52,15 @@ exports.create = (req, res) => {
   })
 
   // Save customer to DB
-  Teams.create(team, (err, data) => {
+  Team.create(team, (err, data) => {
     if (err)
       res.status(500).send({
         message: err.message || 'err: Some error occured while creating the new team.'
       })
-    else res.sennd(data)
+    else {
+
+      res.status(201).send(data)
+    }
   })
 }
 
@@ -60,28 +73,36 @@ exports.findAll = (req, res) => {
         message:
           err.message || 'err: Some error occurred while getting teams.'
       })
-    else res.send(data)
+    else res.status(200).send(data)
   })
 }
 
 exports.findOne = (req, res) => {
-  Team.apply.findById(req.params.id, (err, data) => {
+  Team.findById(req.params.teamId, (err, data) => {
     if (err) {
       if (err.kind === 'not_found') {
         res.status(404).send({
-          message: `err: Not found team with id ${req.params.id}.`
+          message: `err: No team found with id ${req.params.id}.`
         })
       } else {
         res.status(500).send({
           message: `err: Error retreiving team with id ${req.params.id}`
         })
       }
-    } else res.send(data)
+    } else res.status(200).send(data)
   })
 }
 
 exports.update = (req, res) => {
   // validate
+  // const errs = validationResult(req)
+  
+  // if (!errs.isEmpty()) {
+  //   res.status(422).send({
+  //     message: errs.array()
+  //   })
+  // }
+
   if (!req.body) {
     res.status(400).send({
       message: 'err: Content cannot be empty.'
@@ -104,7 +125,7 @@ exports.update = (req, res) => {
             message: `err: Error updating team with id ${req.param.id}.`
           })
         }
-      } else res.send(data)
+      } else res.status(200).send(data)
     }
   )
 }
@@ -121,7 +142,7 @@ exports.delete = (req, res) => {
           message: `err: Could not delete customer with id ${req.params.id}`
         })
       }
-    } else res.send({ message: `info: Team was successfully deleted.`})
+    } else res.status(200).send({ message: `info: Team was successfully deleted.`})
   })
 }
 
@@ -132,6 +153,6 @@ exports.deleteAll = (req, res) => {
         message: err.message ||
           'err: Error occurred while removing all teams.'
       })
-    else res.send({ message: 'All teams were removed successfully.'})
+    else res.status(200).send({ message: 'All teams were removed successfully.'})
   })
 }

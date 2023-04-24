@@ -1,5 +1,9 @@
-module.export = app => {
-  const teams = require('../models/team.controller.js')
+
+
+module.exports = app => {
+  const teams = require('../controllers/team.controller.js')
+
+  var router = require('express').Router()
 
   // new team
   app.post('/teams',

@@ -10,7 +10,7 @@ const Team = function(team) {
 }
 
 Team.create = (newTeam, result) => {
-  sql.query('insert into teams set ?', newTeam, (err, res) => {
+  sql.query('insert into teams set ?;', newTeam, (err, res) => {
     if (err) {
       console.log('error: ', err)
       result(err, null)
@@ -23,7 +23,7 @@ Team.create = (newTeam, result) => {
 }
 
 Team.findById = (id, result) => {
-  sql.query(`select * from teams where id = ${id}`, (err, res) => {
+  sql.query(`select * from teams where id = ${id};`, (err, res) => {
     if (err) {
       console.log('err: ', err)
       result(err, null)
@@ -44,7 +44,7 @@ Team.getAll = (title, result) => {
   let query = 'select * from teams'
 
   if (title) {
-    query += ` where title like '%${title}%'`
+    query += ` where title like '%${title}%;'`
   }
 
   sql.query(query, (err, res) => {
@@ -61,7 +61,7 @@ Team.getAll = (title, result) => {
 
 Team.updateById = (id, team, result) => {
   sql.query(
-    'update teams set id = ?, name = ?, coach_id = ?, league_id = ?, notes = ?, motto = ?',
+    'update teams set id = ?, name = ?, coach_id = ?, league_id = ?, notes = ?, motto = ?;',
     [team.id, team.name, team.coach_id, team.league_id, team.notes, team.motto],
     (err, res) => {
       if (err) {
@@ -83,7 +83,7 @@ Team.updateById = (id, team, result) => {
 }
 
 Team.remove = (id, result) => {
-  sql.query('delete form teams where id = ?', id, (err, res) => {
+  sql.query('delete form teams where id = ?;', id, (err, res) => {
     if (err) {
       console.log('err: ', err)
       result(null, err)
@@ -102,7 +102,7 @@ Team.remove = (id, result) => {
 }
 
 Team.removeAll = result => {
-  sql.query('delete from teams', (err, res) => {
+  sql.query('delete from teams;', (err, res) => {
     if (err) {
       console.log('err: ', err)
       result(null, err)
@@ -112,6 +112,24 @@ Team.removeAll = result => {
     console.log(`info: deleted ${res.affectedRows} teams.`)
     result(null, res)
   })
+}
+
+Team.checkDuplicateName = async (name) => {
+  sql.query(`select * from teams where name = ${name};`, (err, res) => {
+    if (err) {
+      console.log('err: ', err)
+      return false
+    }
+
+    if (res.length) {
+      console.log('info: duplicate team found')
+      return false
+    }
+
+    console.log('info: no duplicate team found')
+    return true
+  })
+
 }
 
 module.exports = Team;
