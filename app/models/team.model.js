@@ -24,6 +24,7 @@ Team.create = (newTeam, result) => {
 }
 
 Team.findById = (id, result) => {
+  console.log('id: ',id)
   sql.query(`select * from teams where id = ${id};`, (err, res) => {
     if (err) {
       console.log('err: ', err)
@@ -84,14 +85,13 @@ Team.updateById = (id, team, result) => {
 }
 
 Team.remove = (id, result) => {
-  sql.query('delete from teams where id = ?;', id, (err, res) => {
+  sql.query(`delete from teams where id = ?`, id, (err, res) => {
     if (err) {
       console.log('err: ', err)
       result(null, err)
       return
     }
-
-    if (res.affectedRows == 0) {
+    if (res.affectedRows === 0) {
       // team not found
       result({ kind: 'not_found'}, null)
       return

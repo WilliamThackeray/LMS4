@@ -95,13 +95,13 @@ exports.findOne = (req, res) => {
 
 exports.update = (req, res) => {
   // validate
-  // const errs = validationResult(req)
+  const errs = validationResult(req)
   
-  // if (!errs.isEmpty()) {
-  //   res.status(422).send({
-  //     message: errs.array()
-  //   })
-  // }
+  if (!errs.isEmpty()) {
+    res.status(422).send({
+      message: errs.array()
+    })
+  }
 
   if (!req.body) {
     res.status(400).send({
@@ -131,15 +131,15 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-  Team.remove(req.params.id, (err, data) => {
+  Team.remove(req.params.teamId, (err, data) => {
     if (err) {
       if (err.kind === 'not_found') {
         res.status(404).send({
-          message: `err: Not found customer with id ${req.params.id}`
+          message: `err: Not found customer with id ${req.params.teamId}`
         })
       } else {
         res.status(500).send({
-          message: `err: Could not delete customer with id ${req.params.id}`
+          message: `err: Could not delete customer with id ${req.params.teamId}`
         })
       }
     } else res.status(200).send({ message: `info: Team was successfully deleted.`})
