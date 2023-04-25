@@ -58,7 +58,7 @@ exports.create = (req, res) => {
         message: err.message || 'err: Some error occured while creating the new team.'
       })
     else {
-
+      console.log('info: Team created successfully.')
       res.status(201).send(data)
     }
   })

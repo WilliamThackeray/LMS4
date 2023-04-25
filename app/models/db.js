@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
 
 connection.connect(err => {
   if (err) throw err
-  console.log('info: Successful database connection...')
+  console.log('info: Successful database connection...\n\n')
 })
 
 module.exports = connection;

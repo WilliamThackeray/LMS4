@@ -16,9 +16,12 @@ Team.create = (newTeam, result) => {
       result(err, null)
       return
     }
-
-    console.log('info:', 'team created: ', { id: res.inserId, ...newTeam })
-    result(null, { id: res.insertId, ...newTeam})
+    // console.log('res: ', res.insertId)
+    let obj = {...newTeam}
+    obj.id = res.insertId
+    // console.log('obj: ', obj)
+    console.log('info:', 'team created: ', obj)
+    result(null, obj)
   })
 }
 
@@ -83,7 +86,7 @@ Team.updateById = (id, team, result) => {
 }
 
 Team.remove = (id, result) => {
-  sql.query('delete form teams where id = ?;', id, (err, res) => {
+  sql.query('delete from teams where id = ?;', id, (err, res) => {
     if (err) {
       console.log('err: ', err)
       result(null, err)
@@ -115,7 +118,7 @@ Team.removeAll = result => {
 }
 
 Team.checkDuplicateName = async (name) => {
-  sql.query(`select * from teams where name = ${name};`, (err, res) => {
+  sql.query(`select * from teams where name = '${name}';`, (err, res) => {
     if (err) {
       console.log('err: ', err)
       return false
