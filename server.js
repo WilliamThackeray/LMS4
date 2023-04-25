@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 })
 
 require('./app/routes/team.routes.js')(app);
+require('./app/routes/lookup.routes.js')(app);
 
 const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {

@@ -4,6 +4,9 @@ LMS4 Questions:
   Error [ERR_HTTP_HEADERS_SENT] --> this is what I get on this test.
 
   ☐ The lookup stuff is just to get the list of coaches for the future dropdown we will us, right?
+    ☐ The lookup should return a json of the coaches right?
+    ☐ If I'm using the (req, res) model, would I need to convert this?
+
 
   ☐ The sorting/paging/filtering just go with the other team stuff right? 
     ☐ How do the routes look for this?
