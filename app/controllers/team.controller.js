@@ -65,9 +65,10 @@ exports.create = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
-  const title = req.query.title
+  // const title = req.query.title
+  const options = req.query
 
-  Team.getAll(title, (err, data) => {
+  Team.getAll(options, (err, data) => {
     if (err)
       res.status(500).send({
         message:

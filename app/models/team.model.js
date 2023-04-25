@@ -42,19 +42,29 @@ Team.findById = (id, result) => {
   })
 }
 
-// Team.getListSQL(options) {
-//   let sql = "select * from teams";
-//   if (options.filterCol){
-//     sql += `where ${$filterCol} like "%`
-//   }
-// }
-
-Team.getAll = (title, result) => {
-  let query = 'select * from teams'
-
-  if (title) {
-    query += ` where title like '%${title}%;'`
+Team.getListSQL = (options) => {
+  let sql = "select * from teams";
+  // filtering
+  if (options.title) {
+    query += ` where title like '%${options.title}%;'`
   }
+  if (options.filterCol) {
+    sql += ` where ${options.filterCol} like "%${options.filterStr}%"`
+  }
+  // sorting
+  if (options.sortCol) {
+    sql += ` where ${options.sortCol} like "%${options.sortDir}%"`
+  }
+  // paging
+  if (options.limit) {
+    sql += ` limit ${options.limit}`
+  }
+  return sql
+}
+
+Team.getAll = (options, result) => {
+  let query = Team.getListSQL(options)
+
 
   sql.query(query, (err, res) => {
     if (err) {
