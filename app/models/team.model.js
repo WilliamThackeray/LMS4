@@ -16,10 +16,8 @@ Team.create = (newTeam, result) => {
       result(err, null)
       return
     }
-    // console.log('res: ', res.insertId)
     let obj = {...newTeam}
     obj.id = res.insertId
-    // console.log('obj: ', obj)
     console.log('info:', 'team created: ', obj)
     result(null, obj)
   })
