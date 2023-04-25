@@ -42,6 +42,13 @@ Team.findById = (id, result) => {
   })
 }
 
+// Team.getListSQL(options) {
+//   let sql = "select * from teams";
+//   if (options.filterCol){
+//     sql += `where ${$filterCol} like "%`
+//   }
+// }
+
 Team.getAll = (title, result) => {
   let query = 'select * from teams'
 

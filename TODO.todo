@@ -2,13 +2,19 @@ LMS4 Questions:
   ☐ When I send a code(422), it resends a header and my program crashes. Is it set up correctly?
   ( look at the seconnd PUT test (update a team (name required)))
   Error [ERR_HTTP_HEADERS_SENT] --> this is what I get on this test.
+  debug this and set breakpoints in all the files:
 
   ☐ The lookup stuff is just to get the list of coaches for the future dropdown we will us, right?
     ☐ The lookup should return a json of the coaches right?
     ☐ If I'm using the (req, res) model, would I need to convert this?
+      (I want to convert this to the other way just to make sure I understand what I'm doing)
+    convert to non-async:
 
 
   ☐ The sorting/paging/filtering just go with the other team stuff right? 
+    (Where do I put this stuff? I don't really know.)
     ☐ How do the routes look for this?
     ☐ Do I need to use the rest_storage_service.js for this part of the project? 
       (that's where the getQueryString() is in.)
+
+    make a function create the query. use req.query for the options:

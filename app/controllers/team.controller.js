@@ -27,13 +27,13 @@ exports.validate = (method) => {
 
 exports.create = (req, res) => {
   // validate
-  // const errs = validationResult(req)
+  const errs = validationResult(req)
   
-  // if (!errs.isEmpty()) {
-  //   res.status(422).send({
-  //     errors: errs.array(), msg: 'duplicate team name'
-  //   })
-  // }
+  if (!errs.isEmpty()) {
+    res.status(422).send({
+      errors: errs.array(), msg: 'duplicate team name'
+    })
+  }
 
   if (!req.body) {
     res.status(400).send({
@@ -95,13 +95,13 @@ exports.findOne = (req, res) => {
 
 exports.update = (req, res) => {
   // validate
-  // const errs = validationResult(req)
+  const errs = validationResult(req)
   
-  // if (!errs.isEmpty()) {
-  //   res.status(422).send({
-  //     message: errs.array()
-  //   })
-  // }
+  if (!errs.isEmpty()) {
+    res.status(422).send({
+      message: errs.array()
+    })
+  }
 
   if (!req.body) {
     res.status(400).send({

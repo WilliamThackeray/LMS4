@@ -18,6 +18,7 @@ module.exports = app => {
           break;
       }
       let result = sql.query(query)
+      console.log('result: ', result)
       res.send(result);
     }
     catch (err) {
