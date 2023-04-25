@@ -22,7 +22,7 @@ Customer.create = (newCustomer, result) => {
 Customer.findById = (id, result) => {
   sql.query(`select * from customers where id = ${id}`, (err, res) => {
     if (err) {
-      console.log('error: ', err)
+      console.log('err: ', err)
       result(err, null)
       return
     }
