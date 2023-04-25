@@ -1,7 +1,9 @@
 LMS4 Questions:
   ☐ When I send a code(422), it resends a header and my program crashes. Is it set up correctly?
+  ( look at the seconnd PUT test (update a team (name required)))
+  Error [ERR_HTTP_HEADERS_SENT] --> this is what I get on this test.
 
-  ☐ The lookup stuff is just to get the list of coaches for teh future dropdown we will us, right?
+  ☐ The lookup stuff is just to get the list of coaches for the future dropdown we will us, right?
 
   ☐ The sorting/paging/filtering just go with the other team stuff right? 
     ☐ How do the routes look for this?

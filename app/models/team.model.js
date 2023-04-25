@@ -63,8 +63,8 @@ Team.getAll = (title, result) => {
 
 Team.updateById = (id, team, result) => {
   sql.query(
-    'update teams set id = ?, name = ?, coach_id = ?, league_id = ?, notes = ?, motto = ?;',
-    [team.id, team.name, team.coach_id, team.league_id, team.notes, team.motto],
+    'update teams set name = ?, coach_id = ?, league_id = ?, notes = ?, motto = ? where id = ?;',
+    [team.name, team.coach_id, team.league_id, team.notes, team.motto, team.id],
     (err, res) => {
       if (err) {
         console.log('err: ', err)
