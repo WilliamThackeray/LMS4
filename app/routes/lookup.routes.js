@@ -1,10 +1,17 @@
-//lookup.routes.js
-//no controller here, just made the sql call here to simplify.
-//Implemented Teams as well for later when we have a player form
-//Example call:   /lookups/coaches
+
 
 module.exports = app => {
-  const lookups = require('../models/lookup.model.js')
+  const lookup = require('../models/lookup.model.js')
 
-  // app.get('/lookups/:lookupTable', lookups.look)
+  app.get('/lookups/:lookupTable', (req, res) => {
+    lookup(req, (err, data) => {
+      if (err) {
+        console.log(err)
+        res.status(500).send({
+          message: `err: Error when looking up data.`
+        })
+      }
+      res.status(200).send(data)
+    })
+  })
 }

@@ -1,15 +1,17 @@
+
+
 const sql = require('./db.js')
 
-const Lookup = function(lookup) {
-  this.lookupTable = lookup.lookupTable
-}
 
-Lookup.look = (options, result) => {
+function Lookup(req, result) {
   let query = ''
-  switch (options.params.lookupTable) {
-    case 'coaches':
+  switch (req.params.lookupTable) {
+    case 'coacheslist':
       query = "SELECT CONCAT(first_name, ' ', last_name) as label, id as value FROM people WHERE person_type='coach'";
         break;
+    case 'coachesData':
+      query = `select concat(p.first_name, ' ', p.last_name) as fullName, p.id, p.email, p.phone, p.team_id from people p where p.person_type = 'coach'`
+      break;
     case 'teams':
       query = "SELECT name as label, id as value FROM teams";
       break;
@@ -25,23 +27,4 @@ Lookup.look = (options, result) => {
   })
 }
 
-// async version. TODO: convert to req/res
-// app.get("/lookups/:lookupTable", async (req, res) => {
-//   try {
-//     let query = "";
-//     switch (req.params.lookupTable) {
-//       case 'coaches':
-//         query = "SELECT CONCAT(first_name, ' ', last_name) as label, id as value FROM people WHERE person_type='coach'";
-//         break;
-//       case 'teams':
-//         c
-//     }
-//     let result = sql.query(query)
-//     console.log('result: ', result)
-//     res.send(result);
-//   }
-//   catch (err) {
-//     res.send(err);
-//     console.log(err.message);
-//   }
-// });
+module.exports = Lookup
